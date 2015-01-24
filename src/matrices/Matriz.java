@@ -65,4 +65,23 @@ public class Matriz {
         ret += "]\n";
         return ret;
     }
+
+    /**
+    * Funcion que realiza el producto de dos matrices
+    */
+    public static Matriz producto(Matriz m1, Matriz m2) throws DimensionesIncompatibles{
+        
+        if((m1.getDimension().width) != (m2.getDimension().height)) throw new DimensionesIncompatibles("El producto de matrices requiere matrices de las mismas dimensiones");        
+        
+        Matriz matrizProducto= new Matriz(m1.getDimension().height,m2.getDimension().width,false);
+        
+        for(int k=0; k<m2.getDimension().width; k++){
+            for(int i=0; i<m1.getDimension().height; i++){
+                for(int j=0; j<m1.getDimension().width; j++){
+                    matrizProducto.datos[k][i]+=m1.datos[j][i]*m2.datos[k][j];
+                }
+            }
+        }
+        return matrizProducto;
+    }
 }
