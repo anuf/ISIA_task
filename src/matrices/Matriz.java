@@ -65,4 +65,46 @@ public class Matriz {
         ret += "]\n";
         return ret;
     }
+
+    /** Calcula la inversa de una matriz*/
+    public static Matriz inversa(Matriz d){
+        int n=d.getDimension().height;  
+        Matriz a=new Matriz(n,n,false);
+        Matriz b=new Matriz(n,n,false);
+        Matriz c=new Matriz(n,n,false);
+ 
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                a.datos[i][j]=d.datos[i][j];
+            }
+        }
+
+        for(int i=0; i<n; i++){
+            b.datos[i][i]=1;
+        }
+
+        for(int k=0; k<n-1; k++){
+            for(int i=k+1; i<n; i++){
+
+                for(int s=0; s<n; s++){
+                    b.datos[i][s]-=a.datos[i][k]*b.datos[k][s]/a.datos[k][k];
+                }
+
+                for(int j=k+1; j<n; j++){
+                    a.datos[i][j]-=a.datos[i][k]*a.datos[k][j]/a.datos[k][k];
+                }
+            }
+        }
+
+        for(int s=0; s<n; s++){
+            c.datos[n-1][s]=b.datos[n-1][s]/a.datos[n-1][n-1];
+            for(int i=n-2; i>=0; i--){
+                c.datos[i][s]=b.datos[i][s]/a.datos[i][i];
+                for(int k=n-1; k>i; k--){
+                    c.datos[i][s]-=a.datos[i][k]*c.datos[k][s]/a.datos[i][i];
+                }
+            }
+        }
+        return c;
+    }
 }
